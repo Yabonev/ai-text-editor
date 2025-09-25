@@ -3,19 +3,19 @@ import { cors } from "hono/cors";
 
 const app = new Hono();
 
-// Configure CORS for production
-const corsOrigins =
-  process.env.NODE_ENV === "production"
-    ? ["https://*.railway.app", process.env.FRONTEND_URL].filter(
-        (url): url is string => Boolean(url),
-      )
-    : "*";
-
+// Configure CORS - allow frontend URL and Railway domains
 app.use(
   "/api/*",
   cors({
-    origin: corsOrigins,
-    allowMethods: ["GET", "POST", "PUT", "DELETE"],
+    origin:
+      process.env.NODE_ENV === "production"
+        ? [
+            process.env.FRONTEND_URL ||
+              "https://ai-text-editorweb-production.up.railway.app",
+            "https://*.up.railway.app",
+          ]
+        : "*",
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
   }),
 );
@@ -51,6 +51,6 @@ app.onError((err, c) => {
 });
 
 export default {
-  port: process.env.PORT || 3001,
+  port: parseInt(process.env.PORT || "3001"),
   fetch: app.fetch,
 };
