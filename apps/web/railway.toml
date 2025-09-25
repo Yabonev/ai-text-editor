@@ -1,6 +1,6 @@
 [build]
 builder = "RAILPACK"
-buildCommand = "bun install && bun run build"
+buildCommand = "echo 'Build env vars:' && env | grep -E '(NODE_ENV|VITE_|MODE)' && bun install && bun run build"
 watchPatterns = ["apps/web/**", "packages/**"]
 
 [deploy]
