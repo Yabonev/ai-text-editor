@@ -3,11 +3,32 @@ import { cors } from "hono/cors";
 
 const app = new Hono();
 
-// Configure CORS - temporarily allow all origins to fix the connection
+// Configure CORS securely
 app.use(
   "/api/*",
   cors({
-    origin: "*",
+    origin: (origin, c) => {
+      // Allow requests with no origin (like mobile apps or Postman)
+      if (!origin) return null;
+
+      // Development: allow localhost
+      if (process.env.NODE_ENV !== "production") {
+        if (origin.startsWith("http://localhost:")) {
+          return origin;
+        }
+      }
+
+      // Production: only allow the specific frontend URL from environment variable
+      if (process.env.NODE_ENV === "production") {
+        const allowedOrigin = process.env.FRONTEND_URL;
+        if (allowedOrigin && origin === allowedOrigin) {
+          return origin;
+        }
+      }
+
+      // Reject all other origins
+      return null;
+    },
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
   }),
