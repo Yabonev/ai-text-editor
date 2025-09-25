@@ -3,6 +3,9 @@ builder = "RAILPACK"
 buildCommand = "bun install && bun run build"
 watchPatterns = ["apps/web/**", "packages/**"]
 
+[build.variables]
+VITE_API_URL = "https://api-production-8cf1.up.railway.app"
+
 [deploy]
 startCommand = "bun run start"
 restartPolicyType = "ON_FAILURE"
