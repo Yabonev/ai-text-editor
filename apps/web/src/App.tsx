@@ -13,14 +13,6 @@ function App() {
 
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
-  console.log("Environment variables:", {
-    VITE_API_URL: import.meta.env.VITE_API_URL,
-    VITE_NODE_ENV: import.meta.env.VITE_NODE_ENV,
-    NODE_ENV: import.meta.env.NODE_ENV,
-    MODE: import.meta.env.MODE,
-    apiUrl,
-  });
-
   useEffect(() => {
     // Test API connection
     fetch(`${apiUrl}/api/health`)
