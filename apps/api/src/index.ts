@@ -8,6 +8,13 @@ app.use(
   "/api/*",
   cors({
     origin: (origin, c) => {
+      console.log("CORS Debug:", {
+        origin,
+        NODE_ENV: process.env.NODE_ENV,
+        FRONTEND_URL: process.env.FRONTEND_URL,
+        isProduction: process.env.NODE_ENV === "production",
+      });
+
       // Allow requests with no origin (like mobile apps or Postman)
       if (!origin) return null;
 
@@ -21,12 +28,18 @@ app.use(
       // Production: only allow the specific frontend URL from environment variable
       if (process.env.NODE_ENV === "production") {
         const allowedOrigin = process.env.FRONTEND_URL;
+        console.log("Production CORS check:", {
+          allowedOrigin,
+          origin,
+          matches: origin === allowedOrigin,
+        });
         if (allowedOrigin && origin === allowedOrigin) {
           return origin;
         }
       }
 
       // Reject all other origins
+      console.log("CORS rejected origin:", origin);
       return null;
     },
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
