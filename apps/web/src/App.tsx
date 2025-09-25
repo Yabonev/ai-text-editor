@@ -12,9 +12,6 @@ function App() {
   const [apiStatus, setApiStatus] = useState<string>("Loading...");
 
   const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3001";
-  const nodeEnv = import.meta.env.VITE_NODE_ENV || "development";
-  const mode =
-    import.meta.env.VITE_MODE || import.meta.env.MODE || "development";
 
   useEffect(() => {
     // Test API connection
