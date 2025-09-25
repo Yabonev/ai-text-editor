@@ -3,18 +3,11 @@ import { cors } from "hono/cors";
 
 const app = new Hono();
 
-// Configure CORS - allow frontend URL and Railway domains
+// Configure CORS - temporarily allow all origins to fix the connection
 app.use(
   "/api/*",
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? [
-            process.env.FRONTEND_URL ||
-              "https://ai-text-editorweb-production.up.railway.app",
-            "https://*.up.railway.app",
-          ]
-        : "*",
+    origin: "*",
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
   }),
