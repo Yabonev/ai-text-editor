@@ -1,6 +1,6 @@
 [build]
 builder = "RAILPACK"
-buildCommand = "echo 'Build env vars:' && env | grep -E '(NODE_ENV|VITE_|MODE)' && bun install && bun run build"
+buildCommand = "NODE_ENV=production VITE_API_URL=https://api-production-8cf1.up.railway.app bun install && bun run build"
 watchPatterns = ["apps/web/**", "packages/**"]
 
 [deploy]
