@@ -52,7 +52,8 @@ app.get("/api/health", (c) => {
     status: "ok",
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || "development",
-    version: "1.0.0",
+    version: "1.0.1",
+    frontendUrl: process.env.FRONTEND_URL,
   });
 });
 
