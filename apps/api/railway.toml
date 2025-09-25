@@ -1,0 +1,12 @@
+[build]
+builder = "nixpacks"
+buildCommand = "bun install && bun run build"
+watchPaths = ["apps/api/**", "packages/shared/**"]
+
+[deploy] 
+startCommand = "bun run start"
+restartPolicyType = "never"
+
+[deploy.variables]
+NODE_ENV = "production"
+FRONTEND_URL = "https://ai-text-editorweb-production.up.railway.app"
