@@ -1,0 +1,19 @@
+[build]
+builder = "RAILPACK"
+buildCommand = "bun install && bun run build"
+watchPatterns = ["apps/api/**", "packages/**"]
+
+[deploy]
+startCommand = "bun run start"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+
+[deploy.variables]
+FRONTEND_URL = "https://web-production-3f31d.up.railway.app"
+
+[environments.production]
+deploy.restartPolicyType = "ON_FAILURE"
+deploy.restartPolicyMaxRetries = 5
+
+[environments.pr]
+deploy.restartPolicyType = "NEVER"
